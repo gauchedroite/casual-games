@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeux de détente</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="launcher.js"></script>
+</head>
+<body>
+  <main id="launcher" class="shell">
+    <header>
+      <p class="eyebrow">Une petite pause, un nouveau jeu</p>
+      <h1>Jeux de détente</h1>
+      <p>Choisissez un jeu pour commencer.</p>
+    </header>
+    <section id="selection" class="panel" hidden aria-labelledby="selection-title">
+      <h2 id="selection-title" tabindex="-1">Choix du jeu</h2>
+      <div id="game-list" class="cards"></div>
+    </section>
+    <section id="loading" class="panel" aria-labelledby="loading-title" aria-busy="true">
+      <h2 id="loading-title" tabindex="-1">Chargement</h2>
+      <p id="loading-message" role="status">Chargement de la liste des jeux…</p>
+      <button id="cancel-loading" type="button" class="secondary">Retour au lanceur</button>
+    </section>
+    <section id="load-error" class="panel" hidden aria-labelledby="error-title">
+      <h2 id="error-title" tabindex="-1">Chargement impossible</h2>
+      <p id="error-message" role="alert"></p>
+      <div class="actions">
+        <button id="retry" type="button">Réessayer</button>
+        <button id="return-to-launcher" type="button" class="secondary">Retour au lanceur</button>
+      </div>
+    </section>
+    <noscript>Activez JavaScript dans votre navigateur pour ouvrir les jeux.</noscript>
+  </main>
+  <div id="player" hidden></div>
+</body>
+</html>

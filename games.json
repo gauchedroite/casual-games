@@ -1,0 +1,9 @@
+{
+  "games": [
+    {
+      "id": "prototype",
+      "title": "Jeu prototype",
+      "entryPoint": "games/prototype/index.html"
+    }
+  ]
+}
