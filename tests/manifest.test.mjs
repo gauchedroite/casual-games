@@ -7,7 +7,7 @@ const game = { id: "prototype", title: "Jeu prototype", entryPoint: "games/proto
 
 test("relative game URLs work in a subdirectory and empty catalogs are valid", () => {
   assert.deepEqual(validateGames({ games: [game] }, base), [{
-    ...game, entryPoint: "https://example.test/launcher/games/prototype/index.html",
+    ...game, entryPoint: "https://example.test/launcher/games/prototype/index.html", hidden: false,
   }]);
   assert.deepEqual(validateGames({ games: [] }, base), []);
 });
@@ -18,6 +18,12 @@ test("malformed catalogs, duplicate IDs and missing titles are rejected", () => 
     { games: [{ ...game, title: " " }] }, { games: [{ ...game, entryPoint: null }] }]) {
     assert.throws(() => validateGames(manifest, base));
   }
+});
+
+test("hidden is an optional boolean game setting", () => {
+  assert.equal(validateGames({ games: [{ ...game, hidden: true }] }, base)[0].hidden, true);
+  assert.equal(validateGames({ games: [game] }, base)[0].hidden, false);
+  assert.throws(() => validateGames({ games: [{ ...game, hidden: "true" }] }, base));
 });
 
 test("entry points cannot leave their same-origin game directory", () => {

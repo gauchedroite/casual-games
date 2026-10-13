@@ -42,14 +42,15 @@ function showSelection() {
     return;
   }
   list.replaceChildren();
-  for (const game of games) {
+  const visibleGames = games.filter((game) => !game.hidden);
+  for (const game of visibleGames) {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = game.title;
     button.addEventListener("click", () => openGame(game));
     list.append(button);
   }
-  if (games.length === 0) list.textContent = "Aucun jeu n’est disponible pour le moment.";
+  if (visibleGames.length === 0) list.textContent = "Aucun jeu n’est disponible pour le moment.";
   show("selection");
 }
 
@@ -79,6 +80,10 @@ async function loadGames() {
 }
 
 function openGame(game) {
+  window.history.replaceState(null, "", window.location.pathname + window.location.search);
+  window.location.href = game.entryPoint;
+
+  /* Iframe-based navigation, retained but disabled:
   stopLoading();
   window.history.replaceState(null, "", `#${game.id}`);
   document.querySelector("#loading-message").textContent = `Chargement de « ${game.title} »…`;
@@ -95,8 +100,10 @@ function openGame(game) {
   // An iframe load event also fires for HTTP error pages. Wait for the game's ready message instead.
   timer = setTimeout(fail, LOAD_TIMEOUT);
   player.append(nextFrame);
+  */
 }
 
+/* Iframe message handling, retained for the disabled iframe path:
 window.addEventListener("message", (event) => {
   if (!frame || event.origin !== window.location.origin || event.source !== frame.contentWindow) return;
   if (event.data?.type === "game:ready") {
@@ -107,6 +114,7 @@ window.addEventListener("message", (event) => {
     showSelection();
   }
 });
+*/
 
 document.querySelector("#retry").addEventListener("click", () => retry());
 document.querySelector("#return-to-launcher").addEventListener("click", showSelection);

@@ -6,7 +6,8 @@ export function validateGames(manifest, baseURL) {
   return manifest.games.map((game) => {
     if (!game || typeof game.id !== "string" || !/^[a-z][a-z0-9-]*$/.test(game.id)
         || ids.has(game.id) || typeof game.title !== "string" || !game.title.trim()
-        || typeof game.entryPoint !== "string") {
+        || typeof game.entryPoint !== "string"
+        || (game.hidden !== undefined && typeof game.hidden !== "boolean")) {
       throw new Error("Un jeu contient des renseignements invalides ou un identifiant en double.");
     }
     const directory = new URL(`games/${game.id}/`, baseURL);
@@ -17,6 +18,6 @@ export function validateGames(manifest, baseURL) {
       throw new Error("Chaque jeu doit utiliser une adresse relative dans son propre dossier, sur ce site.");
     }
     ids.add(game.id);
-    return { id: game.id, title: game.title.trim(), entryPoint: entry.href };
+    return { id: game.id, title: game.title.trim(), entryPoint: entry.href, hidden: game.hidden === true };
   });
 }

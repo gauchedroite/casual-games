@@ -3,7 +3,13 @@
     {
       "id": "prototype",
       "title": "Jeu prototype",
-      "entryPoint": "games/prototype/index.html"
+      "entryPoint": "games/prototype/index.html",
+      "hidden": true
+    },
+    {
+      "id": "cinema",
+      "title": "Une soirée cinéma!",
+      "entryPoint": "games/cinema/index.html"
     }
   ]
 }

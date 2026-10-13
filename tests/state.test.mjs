@@ -4,6 +4,10 @@ import {
   TOTAL_SCENES, SELECTED_PROFILE_KEY, profileKey,
   loadProfile, saveProfile, completeScene,
 } from "../games/prototype/state.js";
+import {
+  SELECTED_PROFILE_KEY as CINEMA_SELECTED_PROFILE_KEY,
+  profileKey as cinemaProfileKey,
+} from "../games/cinema/state.js";
 
 function memoryStorage() {
   const values = new Map();
@@ -56,6 +60,13 @@ test("both profiles keep independent options and progress", () => {
   assert.equal(second.completedScenes, 0);
   assert.deepEqual(second.options, { music: true, soundEffects: true, difficulty: "normal" });
   assert.equal(profileKey("1"), "casual-games:prototype:profile:1");
+});
+
+test("cinema saves use keys separate from the prototype", () => {
+  assert.equal(CINEMA_SELECTED_PROFILE_KEY, "casual-games:cinema:selected-profile");
+  assert.notEqual(CINEMA_SELECTED_PROFILE_KEY, SELECTED_PROFILE_KEY);
+  assert.equal(cinemaProfileKey("1"), "casual-games:cinema:profile:1");
+  assert.notEqual(cinemaProfileKey("1"), profileKey("1"));
 });
 
 test("unavailable scenes and invalid profile IDs are rejected", () => {
